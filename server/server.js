@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 import express from "express";
-import { configDotenv } from "dotenv";
+ import dotenv from "dotenv"
 import cors from "cors"
 import { Router } from "./api.js";
 import { createServer } from "http";
 import { userRouter } from "./userApi.js";
  
 const app =  express();
- 
+  dotenv.config({path : "./.env"})
 const server = createServer(app);
 app.use(express.json());
  const router = express.Router();
@@ -25,9 +25,10 @@ app.use('/user' , userRouter);
  
 
 mongoose
-  .connect("mongodb+srv://rakhydubey4:meme@book.hrump.mongodb.net/?retryWrites=true&w=majority&appName=book")
+  .connect(process.env.MONGODBURL)
   .then(() => console.log("Connected to MongoDB successfully"))
   
+
 
 
 server.listen(3001 , ()=>{
